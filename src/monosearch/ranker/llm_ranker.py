@@ -36,7 +36,7 @@ class LLMRanker(BaseRanker):
         
         for query, ranked_docs in ranked_docs_dict.items():
             result.results[query] = ranked_docs
-            
+        
         return result
     
     def _rank_single_query(self, query: str, documents: list, context: SearchContext) -> list:
@@ -47,7 +47,6 @@ class LLMRanker(BaseRanker):
         response = silicon_flow.chat(prompt, context.llm_config)
         try:
             indices = eval(response.choices[0].message.content)
-            print(len(documents), len(indices), indices)
             return [documents[i] for i in indices]
         except:
             return []

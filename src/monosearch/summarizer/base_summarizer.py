@@ -1,7 +1,7 @@
 from typing import List, Dict, Any, Optional
 from abc import ABC, abstractmethod
 
-from ..datatypes.common import SearchContext, Document
+from ..datatypes.common import SearchContext
 
 
 class BaseSummarizer(ABC):

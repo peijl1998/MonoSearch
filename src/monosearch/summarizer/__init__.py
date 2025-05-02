@@ -1,5 +1,3 @@
-"""
-总结模块，负责汇总搜索结果，生成最终答案。
-"""
+from .plain_summarizer import PlainSummarizer
 
-from .summarizer import Summarizer, BaseSummarizer 
+__all__ = ["PlainSummarizer"]

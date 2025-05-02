@@ -36,12 +36,6 @@ class SearchResult(BaseModel):
     user_query: str
     result: Optional[str] = None
 
-
-class SearchContext(BaseModel):
-    user_query: str
-    llm_config: LlmConfig = Field(default_factory=LlmConfig)
-
-
 class QueryDocuments(BaseModel):
     results: Dict[str, List[Document]] = Field(default_factory=dict)
     
@@ -65,3 +59,16 @@ class QueryDocuments(BaseModel):
             
     def getAllKeywords(self) -> List[str]:
         return list(self.results.keys())
+    
+    def desc(self) -> str:
+        desc = ""
+        for keyword, docs in self.results.items():
+            desc += f"[{keyword}]\n"
+            desc += "\n".join([doc.title for doc in docs])
+            desc += "\n\n"
+        return desc
+    
+class SearchContext(BaseModel):
+    user_query: str
+    llm_config: LlmConfig = Field(default_factory=LlmConfig)
+    intermediate_results: QueryDocuments  = Field(default_factory=QueryDocuments)

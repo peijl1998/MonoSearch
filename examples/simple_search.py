@@ -1,43 +1,22 @@
 #!/usr/bin/env python
-"""
-MonoSearch简单使用示例。
-"""
-import sys
-import os
+from monosearch.datatypes.common import LlmConfig
+from monosearch.monosearch import MonoSearch
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-from src.monosearch import MonoSearch
-from src.monosearch.utils.logger import get_logger
-
-logger = get_logger("monosearch.example")
 
 def main():
-    # 创建MonoSearch实例
-    search_engine = MonoSearch(max_iterations=2)
+    search_engine = MonoSearch()
+    model_config = LlmConfig(
+        model_name = "Pro/deepseek-ai/DeepSeek-V3"
+        # model_name = "Pro/deepseek-ai/DeepSeek-R1"
+        # model_name = "Qwen/Qwen3-8B"
+    )
     
-    # 执行查询
-    query = "Python深度学习框架比较"
-    logger.info(f"执行查询: {query}")
-    
-    # 添加自定义属性
-    properties = {
-        "language": "zh",
-        "sort_by": "relevance"
-    }
-    
-    # 获取搜索结果
-    results = search_engine.search(query, properties=properties)
-    
-    # 打印结果
-    print("\n" + "="*80)
+    # query = "特朗普最近上任总统后有哪些壮举"
+    query = "后摇滚Mono乐队成员研究，最近在中国有哪些演出，演出曲目分别是什么"
+
+    results = search_engine.search(query, model_config, max_iterations=5)
+
     print(results)
-    print("="*80 + "\n")
-    
-    # 打印文档详情
-    logger.info(f"找到 {len(results.documents)} 个文档")
-    for i, doc in enumerate(results.documents, 1):
-        print(f"{i}. {doc}")
 
 
 if __name__ == "__main__":
