@@ -28,27 +28,27 @@ class MonoSearch:
             llm_config = llm_config
         )
         
-        # Query理解
+        # Query analysis
         query_list = self.query_analyzer.analyze(query, context)
         
         iteration = 0
         while query_list and iteration < max_iterations:
             iteration += 1
-            print(f"-----------\033[31m第{iteration}轮\033[0m--------------")
-            print(f"\033[31m待查询\033[0m\n{query_list}")
+            print(f"-----------\033[31mIteration {iteration}\033[0m--------------")
+            print(f"\033[31mQueries to process\033[0m\n{query_list}")
             
-            # 召回
+            # Retrieval
             query_documents = self.retriever.retrieve(query_list, context)
-            print(f"\033[31m召回结果\033[0m：\n {query_documents.desc()}")
+            print(f"\033[31mRetrieval results\033[0m：\n {query_documents.desc()}")
             
-            # 排序
+            # Ranking
             rank_documents = self.ranker.rank(query_documents, context)
             context.intermediate_results.addResult(rank_documents)
-            print(f"\033[31m排序结果\033[0m：\n {rank_documents.desc()}")
+            print(f"\033[31mRanking results\033[0m：\n {rank_documents.desc()}")
             
-            # 反思
+            # Reflection
             should_continue, new_query_list = self.reflex.reflect(context)
-            print(f"\033[31m继续查询\033[0m{should_continue}, {new_query_list}")
+            print(f"\033[31mContinue searching?\033[0m {should_continue}, {new_query_list}")
             print("=========================================")
 
             query_list = new_query_list

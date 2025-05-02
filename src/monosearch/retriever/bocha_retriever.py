@@ -7,7 +7,7 @@ from typing import List
 
 
 class BochaRetriever(BaseRetriever):
-    def __init__(self, count: int = 10, page: int = 1):
+    def __init__(self, count: int = 5, page: int = 1):
         self.count = count
         self.page = page
         

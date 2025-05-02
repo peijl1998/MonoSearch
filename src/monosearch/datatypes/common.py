@@ -64,7 +64,7 @@ class QueryDocuments(BaseModel):
         desc = ""
         for keyword, docs in self.results.items():
             desc += f"[{keyword}]\n"
-            desc += "\n".join([doc.title for doc in docs])
+            desc += "\n".join(["Title:" + doc.title for doc in docs])
             desc += "\n\n"
         return desc
     
